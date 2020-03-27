@@ -35,6 +35,6 @@ RUN mkdir -p /etc/portage/{repos.conf,package.{accept_keywords,env,license,mask,
 RUN emerge-webrsync && \
 	emerge --update --newuse --deep @world sys-devel/crossdev && \
 	emerge --depclean && \
-	crossdev -S -v -t ${CROSS_TARGET} --ov-output /var/db/repos/local-crossdev/ && \
+	crossdev -S -t ${CROSS_TARGET} --ov-output /var/db/repos/local-crossdev/ && \
 	emerge-wrapper --target ${CROSS_TARGET} --init && \
 	rm -rf /var/db/repos/gentoo
