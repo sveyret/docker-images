@@ -19,15 +19,15 @@ MAINTAINER Stéphane Veyret <sveyret@gmail.com>
 
 ENV CROSS_TARGET armv7a-hardfloat-linux-gnueabi
 
-RUN mkdir -p /usr/local/portage/local-crossdev/{profiles,metadata} && \
-	echo 'local-crossdev' >/usr/local/portage/local-crossdev/profiles/repo_name && \
-	echo 'masters = gentoo' >/usr/local/portage/local-crossdev/metadata/layout.conf && \
-	chown -R portage:portage /usr/local/portage/
+RUN mkdir -p /var/db/repos/local-crossdev/{profiles,metadata} && \
+	echo 'local-crossdev' >/var/db/repos/local-crossdev/profiles/repo_name && \
+	echo 'masters = gentoo' >/var/db/repos/local-crossdev/metadata/layout.conf && \
+	chown -R portage:portage /var/db/repos/
 
 RUN mkdir -p /etc/portage/{repos.conf,package.{accept_keywords,env,license,mask,properties,unmask,use}} && \
 	cp /usr/share/portage/config/repos.conf /etc/portage/repos.conf/gentoo.conf && \
 	echo '[local-crossdev]' >/etc/portage/repos.conf/local-crossdev.conf && \
-	echo 'location = /usr/local/portage/local-crossdev' >>/etc/portage/repos.conf/local-crossdev.conf && \
+	echo 'location = /var/db/repos/local-crossdev' >>/etc/portage/repos.conf/local-crossdev.conf && \
 	echo 'priority = 10' >>/etc/portage/repos.conf/local-crossdev.conf && \
 	echo 'masters = gentoo' >>/etc/portage/repos.conf/local-crossdev.conf && \
 	echo 'auto-sync = no' >>/etc/portage/repos.conf/local-crossdev.conf
@@ -35,6 +35,6 @@ RUN mkdir -p /etc/portage/{repos.conf,package.{accept_keywords,env,license,mask,
 RUN emerge-webrsync && \
 	emerge --update --newuse --deep @world sys-devel/crossdev && \
 	emerge --depclean && \
-	crossdev -S -v -t ${CROSS_TARGET} --ov-output /usr/local/portage/local-crossdev/ && \
+	crossdev -S -v -t ${CROSS_TARGET} --ov-output /var/db/repos/local-crossdev/ && \
 	emerge-wrapper --target ${CROSS_TARGET} --init && \
-	rm -rf /usr/portage
+	rm -rf /var/db/repos/gentoo
