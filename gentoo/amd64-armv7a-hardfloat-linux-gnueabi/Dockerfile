@@ -17,7 +17,7 @@
 FROM gentoo/stage3-amd64:latest
 MAINTAINER Stéphane Veyret <sveyret@gmail.com>
 
-ENV CROSS_TARGET armv7a-hardfloat-linux-gnueabi
+ENV CROSS_TARGET armv7a-unknown-linux-gnueabihf
 
 RUN mkdir -p /var/db/repos/local-crossdev/{profiles,metadata} && \
 	echo 'local-crossdev' >/var/db/repos/local-crossdev/profiles/repo_name && \
